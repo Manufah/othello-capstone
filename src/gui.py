@@ -43,6 +43,9 @@ class OthelloGUI:
         self.board = OthelloBoard()
         self.cell_size = 60
 
+        # Menyimpan koordinat (baris, kolom) langkah terakhir untuk sorotan visual papan
+        self.last_move = None
+
         # Menggambar papan awal saat aplikasi pertama kali dijalankan
         self.draw_board()
 
@@ -59,8 +62,9 @@ class OthelloGUI:
                 x2 = x1 + self.cell_size
                 y2 = y1 + self.cell_size
 
-                # Menggambar garis kotak petak papan
-                self.canvas.create_rectangle(x1, y1, x2, y2, outline="#1B5E20", width=2)
+                # Sorot latar petak jika merupakan posisi langkah terakhir
+                bg_color = "#689F38" if (row, col) == self.last_move else ""
+                self.canvas.create_rectangle(x1, y1, x2, y2, fill = bg_color, outline="#1B5E20", width=2)
 
                 piece = self.board.grid[row][col]
                 margin = 8
@@ -76,6 +80,15 @@ class OthelloGUI:
                         x1 + hint_margin, y1 + hint_margin,
                         x2 - hint_margin, y2 - hint_margin,
                         fill="#1E5622", outline=""
+                    )
+
+                # Menggambar titik emas kecil di tengah bidak yang baru diletakkan pada langkah terakhir
+                if (row, col) == self.last_move:
+                    dot_margin = 25
+                    self.canvas.create_oval(
+                        x1 + dot_margin, y1 + dot_margin,
+                        x2 - dot_margin, y2 - dot_margin,
+                        fill="#FDD835", outline=""
                     )
 
 
@@ -98,6 +111,7 @@ class OthelloGUI:
         try:
             # Menaruh bidak pada papan logika lalu memperbarui tampilan dan skor
             self.board.place_piece(row, col)
+            self.last_move = (row, col)
             self.draw_board()
             self.update_info_label()
 
@@ -136,6 +150,7 @@ class OthelloGUI:
         self.board = OthelloBoard()
         self.draw_board()
         self.update_info_label()
+        self.last_move = None
 
 
     # Membuka jendela baru untuk menampilkan maksimal 10 riwayat pertandingan terakhir
