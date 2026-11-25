@@ -18,8 +18,8 @@ A modular desktop implementation of the classic board game **Othello (Reversi)**
 
 1. **Clone the repository:**
 ```bash
-    git clone https://github.com/Manufah/othello-capstone.git
-    cd othello-capstone
+git clone https://github.com/Manufah/othello-capstone.git
+cd othello-capstone
 ```
 
 2. **Launch the game:**
