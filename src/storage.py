@@ -35,3 +35,10 @@ def save_match_result(player_black, player_white, score_black, score_white, winn
 
     with open(filepath, "w", encoding="utf-8") as file:
         json.dump(history, file, indent=4)
+
+
+# Menghapus seluruh isi riwayat pertandingan dengan menimpa file menjadi list kosong
+def clear_history(filepath="data/scores.json"):
+    os.makedirs(os.path.dirname(filepath), exist_ok=True)
+    with open(filepath, "w", encoding="utf-8") as file:
+        json.dump([], file, indent=4)
